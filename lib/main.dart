@@ -27,7 +27,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-
+      backgroundColor: Color(0xffdf223d),
     );
   }
 
