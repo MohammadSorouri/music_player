@@ -2,11 +2,11 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 final List<String> imgList = [
-  'https://www.avazfarsi.com/uploads/thumbs/89adf3dc9-1.jpg',
-  'https://junkee.com/wp-content/uploads/2017/09/Reputation.jpg',
+  'https://persianfa.com/wp-content/uploads/2019/01/Ebi_s_new_album6.jpg',
+  'https://headlineplanet.com/home/wp-content/uploads/2017/08/Taylor-Swift-Reputation-758x426.jpg',
   'https://financialtribune.com/sites/default/files/styles/telegram/public/field/image/17january/12_kaveh.jpg?itok=UQ4BBU4D',
   'https://lastfm-img2.akamaized.net/i/u/ar0/955de48e45a34d8d9eeebaf63e6716a5.jpg',
-  'https://musicofilm.com/wp-content/uploads/2019/06/roozbeh-bemani-yani-tamoom-364x245.jpg',
+  'http://mag.charkhoneh.com/wp-content/uploads/2018/10/bemani2-557x330.jpg',
   'https://metalheadzone.com/wp-content/uploads/2019/03/metallica-2017-new-lineup.jpg'
 ];
 class CarouselWithIndicatorHead extends StatelessWidget {
@@ -16,11 +16,13 @@ class CarouselWithIndicatorHead extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-        padding: EdgeInsets.only(top: 15.0),
-        child: Column(children: [
-          CarouselWithIndicator(),
-        ]));
+    return Container(
+      child: Padding(
+          padding: EdgeInsets.only(top: 15.0),
+          child: Column(children: [
+            CarouselWithIndicator(),
+          ])),
+    );
   }
 }
 
@@ -95,30 +97,33 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
         autoPlay: true,
         enlargeCenterPage: true,
         aspectRatio: 2.0,
+        scrollDirection: Axis.horizontal,
         onPageChanged: (index) {
           setState(() {
             _current = index;
           });
         },
       ),
-      Padding(
-        padding: const EdgeInsets.only(bottom: 4),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: map<Widget>(
-            imgList,
-                (index, url) {
-              return Container(
-                width: 8.0,
-                height: 8.0,
-                margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
-                decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: _current == index
-                        ? Colors.white.withOpacity(.9)
-                        : Colors.white.withOpacity(.4)),
-              );
-            },
+      Container(
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 4),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: map<Widget>(
+              imgList,
+                  (index, url) {
+                return Container(
+                  width: 8.0,
+                  height: 8.0,
+                  margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: _current == index
+                          ? Colors.white.withOpacity(.9)
+                          : Colors.white.withOpacity(.4)),
+                );
+              },
+            ),
           ),
         ),
       ),
@@ -129,7 +134,7 @@ final List child = map<Widget>(
   imgList,
       (index, i) {
     return Container(
-      margin: EdgeInsets.all(5.0),
+      margin: EdgeInsets.all(5),
       child: ClipRRect(
         borderRadius: BorderRadius.all(Radius.circular(5.0)),
         child: Stack(children: <Widget>[

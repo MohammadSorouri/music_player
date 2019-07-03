@@ -19,8 +19,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'MusicPlayer',
       theme: ThemeData(
-        primaryColor:Color(0xffdf223d),
-        primarySwatch: Colors.red,
+        primarySwatch: Colors.amber,
         fontFamily: "Quicksand"
       ),
       home: MyHomePage(),
@@ -39,34 +38,13 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      bottomNavigationBar: Container(
-        height: 64,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(topRight: Radius.circular(30),topLeft: Radius.circular(30)),
-          color: Colors.white,
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            Container(
-              padding: EdgeInsets.only(right: 12),
-              decoration: BoxDecoration(
-                color: Color(0xfffbe8eb),
-                borderRadius: BorderRadius.all(Radius.circular(30))
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  IconButton(icon: Icon(MdiIcons.musicCircle,size: 32,color: Color(0xffdf223d),),onPressed: (){},),
-                  Text("Home",style: TextStyle(color: Color(0xffdf223d),fontWeight: FontWeight.bold),)
-                ],
-              ),
-            ),
-            IconButton(icon: Icon(Icons.headset,color: Colors.grey,),onPressed: (){},),
-            IconButton(icon: Icon(Icons.perm_identity,color: Colors.grey,),onPressed: (){},)
-          ],
-        ),
-      ),
+      bottomNavigationBar:
+          BottomNavigationBar(items: [
+            BottomNavigationBarItem(icon: Icon(MdiIcons.musicCircle,),title: Text("Home",style: TextStyle(fontWeight: FontWeight.bold),)),
+            BottomNavigationBarItem(icon: Icon(Icons.headset,),title: Text("My Music")),
+            BottomNavigationBarItem(icon: Icon(Icons.person_outline,),title: Text("Account"))
+          ]),
+
       backgroundColor: Color(0xfff7f7f7),
       body: CustomScrollView(
         slivers: <Widget>[
@@ -83,7 +61,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
                     ],
                   ),
-                  new CarouselWithIndicatorHead(),
+                 new CarouselWithIndicatorHead(),
+
                 ],
               ),
             ),
@@ -95,11 +74,12 @@ class _MyHomePageState extends State<MyHomePage> {
               new Popular(),
               new ListMusic1(),
               SizedBox(height: 8,),
-              new ListMusic1(),
+              new ListMusic2(),
               SizedBox(height: 8,),
-              new ListMusic1(),
+              new ListMusic3(),
               SizedBox(height: 8,),
-              new ListMusic1(),
+              new ListMusic4(),
+              SizedBox(height: 24,),
 
             ]),
           )
@@ -123,7 +103,9 @@ class ListMusic1 extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           new ItemMusic(name: "Del",url: "http://myritm.com/Uploads/Pictures/1394-12/K/Kaveh-Afagh-Del-Picture.jpg",),
-          new ItemMusic(url: "http://img1.motolyrics.com/3/96/39691/siavash-ghomayshi-original.jpg", name:"Pooch" ),
+          SizedBox(width: 8,),
+          new ItemMusic(url: "https://www.my98music.com/wp-content/uploads/2015/05/Siavash-Ghomayshi-Pooch.jpg", name:"Pooch" ),
+          SizedBox(width: 8,),
           new ItemMusic(url: "https://bir-music.com/wp-content/uploads/2019/05/Reza-Yazdani-Too-Khodam-Misoozam.jpg", name: "Misoozam")
 
         ],
@@ -131,7 +113,75 @@ class ListMusic1 extends StatelessWidget {
     );
   }
 }
+class ListMusic2 extends StatelessWidget {
+  const ListMusic2({
+    Key key,
+  }) : super(key: key);
 
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(top: 8,left: 16,right: 16),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          new ItemMusic(name: "Zemestoon",url: "http://dl.irhits.ir/Single/1396/09%20-%20Azar/30/Aria%20Band%20-%20Zemestoon.jpg",),
+          SizedBox(width: 8,),
+          new ItemMusic(url: "https://d2uqwoe9jzxxtn.cloudfront.net/images/music/cover/Ebi_Jane-Javani_1419049746.jpg", name:"Jane Javani" ),
+          SizedBox(width: 8,),
+          new ItemMusic(url: "http://barf-music.com/wp-content/uploads/Shadmehr-Aghili-Hamishegi.jpg", name: "Hamishegi")
+
+        ],
+      ),
+    );
+  }
+}
+class ListMusic3 extends StatelessWidget {
+  const ListMusic3({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(top: 8,left: 16,right: 16),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          new ItemMusic(name: "Na",url: "https://images.sk-static.com/images/media/profile_images/artists/520028/huge_avatar",),
+          SizedBox(width: 8,),
+          new ItemMusic(url: "https://www.ganja2music.com/Image/Post/12.2014/Sirvan%20Khosravi%20-%20Kojaei%20To.jpg", name:"Kojaei" ),
+          SizedBox(width: 8,),
+          new ItemMusic(url: "https://ahaang.com/wp-content/uploads/2015/12/%DB%8C%D8%A7%D8%B3.jpg", name: "Asalatََ")
+
+        ],
+      ),
+    );
+  }
+}
+class ListMusic4 extends StatelessWidget {
+  const ListMusic4({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(top: 8,left: 16,right: 16),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          new ItemMusic(name: "Vabastegi",url: "https://i1.sndcdn.com/artworks-000239199195-3gq4bt-t500x500.jpg",),
+          SizedBox(width: 8,),
+          new ItemMusic(url: "https://upmusics.com/wp-content/uploads/2017/11/mohsen-chavoshi-hamkhaab.jpg", name:"Hamkhab" ),
+          SizedBox(width: 8,),
+          new ItemMusic(url: "https://upload.wikimedia.org/wikipedia/en/9/9b/Taylor_Swift_Feat._Kendrick_Lamar_-_Bad_Blood_%28Official_Single_Cover%29.png", name: "Bad Blood")
+
+        ],
+      ),
+    );
+  }
+}
 class ItemMusic extends StatelessWidget {
   String url;
   String name;
@@ -150,8 +200,8 @@ class ItemMusic extends StatelessWidget {
             alignment: Alignment.bottomLeft,
             children: <Widget>[
               Container(
-                height: 120,
-                width: 120,
+                height: height(context),
+                width: height(context),
                 decoration: BoxDecoration(
                     image: DecorationImage(image: NetworkImage(url),fit: BoxFit.cover),
                     borderRadius: BorderRadius.only(topLeft: Radius.circular(20),topRight: Radius.circular(20))
@@ -167,7 +217,7 @@ class ItemMusic extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    Icon(Icons.headset,color: Colors.redAccent,size: 18,),
+                    Icon(Icons.headset,color: Colors.amberAccent,size: 18,),
                     Text("15W",style: TextStyle(color:Colors.white),),
                   ],
                 ),
@@ -178,10 +228,12 @@ class ItemMusic extends StatelessWidget {
           Text(name,style: TextStyle(fontSize: 16),)
         ],
       ),
-      width: 120,
-      height: 150,
+      width: height(context),
+      height: height(context)+30,
     );
   }
+
+  double height(BuildContext context) => (MediaQuery.of(context).size.width-48)/3;
 }
 
 class Popular extends StatelessWidget {
@@ -214,18 +266,11 @@ class ItemList extends StatelessWidget {
     return Stack(
       children: <Widget>[
         Container(
-          width: MediaQuery.of(context).size.width,
-          height: 50,
-          decoration:BoxDecoration(
-            color: Color(0xffdf223d),
-          ),
-        ),
-        Container(
           padding: EdgeInsets.only(top: 32,right: 24,left: 24),
           width: MediaQuery.of(context).size.width,
           decoration:BoxDecoration(
             color: Color(0xfff7f7f7),
-            borderRadius: BorderRadius.only(topRight: Radius.circular(30),topLeft: Radius.circular(30))
+            borderRadius: BorderRadius.only(topRight: Radius.circular(15),topLeft: Radius.circular(15))
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -238,10 +283,10 @@ class ItemList extends StatelessWidget {
                       borderRadius: BorderRadius.all(Radius.circular(50)),
                       color: Colors.white
                     ),
-                    child: Icon(MdiIcons.microphoneVariant,color: Color(0xffdf223d),size: 32,),
+                    child: Icon(MdiIcons.microphoneVariant,color: Colors.amberAccent,size: 24,),
                   ),
                   SizedBox(height: 8,),
-                  Text("Singer",style: TextStyle(fontSize: 16),)
+                  Text("Singer",style: TextStyle(fontSize: 14),)
                 ],
               ),
               Column(
@@ -252,10 +297,10 @@ class ItemList extends StatelessWidget {
                         borderRadius: BorderRadius.all(Radius.circular(50)),
                         color: Colors.white
                     ),
-                    child: Icon(MdiIcons.radio,color: Color(0xffdf223d),size: 32,),
+                    child: Icon(MdiIcons.radio,color: Colors.amberAccent,size: 24,),
                   ),
                   SizedBox(height: 8,),
-                  Text("Radio",style: TextStyle(fontSize: 16),)
+                  Text("Radio",style: TextStyle(fontSize: 14),)
                 ],
               ),   Column(
                 children: <Widget>[
@@ -265,10 +310,10 @@ class ItemList extends StatelessWidget {
                         borderRadius: BorderRadius.all(Radius.circular(50)),
                         color: Colors.white
                     ),
-                    child: Icon(MdiIcons.playlistMusic,color: Color(0xffdf223d),size: 32,),
+                    child: Icon(MdiIcons.playlistMusic,color: Colors.amberAccent,size: 24,),
                   ),
                   SizedBox(height: 8,),
-                  Text("Song List",style: TextStyle(fontSize: 16),)
+                  Text("Song List",style: TextStyle(fontSize: 14),)
                 ],
               ),   Column(
                 children: <Widget>[
@@ -278,10 +323,10 @@ class ItemList extends StatelessWidget {
                         borderRadius: BorderRadius.all(Radius.circular(50)),
                         color: Colors.white
                     ),
-                    child: Icon(MdiIcons.starFourPoints,color: Color(0xffdf223d),size: 32,),
+                    child: Icon(MdiIcons.starFourPoints,color: Colors.amberAccent,size: 24,),
                   ),
                   SizedBox(height: 8,),
-                  Text("Rank",style: TextStyle(fontSize: 16),)
+                  Text("Rank",style: TextStyle(fontSize: 14),)
                 ],
               )
             ],
