@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 final List<String> imgList = [
   'https://persianfa.com/wp-content/uploads/2019/01/Ebi_s_new_album6.jpg',
   'https://headlineplanet.com/home/wp-content/uploads/2017/08/Taylor-Swift-Reputation-758x426.jpg',
@@ -138,7 +139,12 @@ final List child = map<Widget>(
       child: ClipRRect(
         borderRadius: BorderRadius.all(Radius.circular(5.0)),
         child: Stack(children: <Widget>[
-          Image.network(i, fit: BoxFit.cover, width: 1000.0,height: 250,),
+          CachedNetworkImage(
+            imageUrl: i,
+            fit: BoxFit.cover,
+            width: 1000,
+            height: 250,
+          ),
           Positioned(
             bottom: 0.0,
             left: 0.0,

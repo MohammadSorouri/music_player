@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-
+import 'package:cached_network_image/cached_network_image.dart';
 import 'header.dart';
+import 'package:flutter_inner_drawer/inner_drawer.dart';
 
 
 void main() => runApp(MyApp());
 
 final Widget placeholder = Container(color: Colors.grey);
 
+final GlobalKey<InnerDrawerState> _innerDrawerKey = GlobalKey<InnerDrawerState>();
 
 
 
@@ -38,58 +40,123 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
+
       bottomNavigationBar:
           BottomNavigationBar(items: [
             BottomNavigationBarItem(icon: Icon(MdiIcons.musicCircle,),title: Text("Home",style: TextStyle(fontWeight: FontWeight.bold),)),
             BottomNavigationBarItem(icon: Icon(Icons.headset,),title: Text("My Music")),
-            BottomNavigationBarItem(icon: Icon(Icons.person_outline,),title: Text("Account"))
+            BottomNavigationBarItem(icon: Icon(Icons.person_outline,),title: Text("Account")),
           ]),
 
       backgroundColor: Color(0xfff7f7f7),
-      body: CustomScrollView(
-        slivers: <Widget>[
-          SliverAppBar(
-            pinned: false,
-            expandedHeight: MediaQuery.of(context).size.width*.75,
-            flexibleSpace: FlexibleSpaceBar(
-              background: Column(
-                children: <Widget>[
-                  Stack(
+      body:Stack(
+        children: <Widget>[
+          CustomScrollView(
+            slivers: <Widget>[
+              SliverAppBar(
+                pinned: false,
+                expandedHeight: MediaQuery.of(context).size.width*.75,
+                flexibleSpace: FlexibleSpaceBar(
+                  background: Column(
                     children: <Widget>[
-                      new SearchBar(),
-                      new Microfon(),
+                      Stack(
+                        children: <Widget>[
+                          new SearchBar(),
+                          new Microfon(),
+
+                        ],
+                      ),
+                      new CarouselWithIndicatorHead(),
 
                     ],
                   ),
-                 new CarouselWithIndicatorHead(),
+                ),
 
-                ],
               ),
-            ),
+              SliverList(
+                delegate: SliverChildListDelegate([
+                  new ItemList(),
+                  new Popular(),
+                  new ListMusic1(),
+                  SizedBox(height: 8,),
+                  new ListMusic2(),
+                  SizedBox(height: 8,),
+                  new ListMusic3(),
+                  SizedBox(height: 8,),
+                  new ListMusic4(),
+                  SizedBox(height: 24,),
 
+                ]),
+              )
+            ],
           ),
-          SliverList(
-            delegate: SliverChildListDelegate([
-              new ItemList(),
-              new Popular(),
-              new ListMusic1(),
-              SizedBox(height: 8,),
-              new ListMusic2(),
-              SizedBox(height: 8,),
-              new ListMusic3(),
-              SizedBox(height: 8,),
-              new ListMusic4(),
-              SizedBox(height: 24,),
-
-            ]),
-          )
+          InnerDrawer(child: Scaffold(), scaffold: Align(
+            alignment: Alignment.bottomLeft,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 32),
+                  child: Stack(
+                    children: <Widget>[
+                      Material(
+                        borderRadius: BorderRadius.only(topLeft: Radius.circular(50),bottomLeft: Radius.circular(50)),
+                        elevation: 10,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(topLeft: Radius.circular(50),bottomLeft: Radius.circular(50)),
+                            color: Colors.white,
+                          ),
+                          width: 88,
+                          height: 64,
+                          child: Padding(
+                              padding: const EdgeInsets.only(left: 4,top: 4,bottom:4,right: 28),
+                              child:Stack(
+                                alignment: Alignment.center,
+                                children: <Widget>[
+                                  ClipRRect(borderRadius: BorderRadius.circular(50),child: CachedNetworkImage(imageUrl: "https://www.my98music.com/wp-content/uploads/2015/05/Siavash-Ghomayshi-Pooch.jpg",fit: BoxFit.cover,)),
+                                  Container(
+                                    width: 12,
+                                    height: 12,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: Colors.white
+                                    ),
+                                  )
+                                ],
+                              )
+                          ),
+                        ),
+                      ),
+                      ClipRRect(
+                        borderRadius: BorderRadius.only(bottomLeft: Radius.circular(30),topLeft: Radius.circular(30)),
+                        child: MaterialButton(
+                          onPressed: (){_open();},
+                          height: 64,
+                          minWidth: 88,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ), position: InnerDrawerPosition.end,animationType: InnerDrawerAnimation.linear,offset: 1,key: _innerDrawerKey,)
         ],
-      ),
+      )
     );
   }
 
 }
+void _open()
+{
+  _innerDrawerKey.currentState.open();
+}
 
+void _close()
+{
+  _innerDrawerKey.currentState.close();
+}
 class ListMusic1 extends StatelessWidget {
   const ListMusic1({
     Key key,
@@ -189,47 +256,66 @@ class ItemMusic extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
+    return Stack(
+      children: <Widget>[
+
+    Container(
+    decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.all(Radius.circular(20))
-      ),
-      child: Column(
-        children: <Widget>[
-          Stack(
-            alignment: Alignment.bottomLeft,
-            children: <Widget>[
-              Container(
-                height: height(context),
-                width: height(context),
-                decoration: BoxDecoration(
-                    image: DecorationImage(image: NetworkImage(url),fit: BoxFit.cover),
-                    borderRadius: BorderRadius.only(topLeft: Radius.circular(20),topRight: Radius.circular(20))
-                ),
-              ),
-              Container(
-                width: 56,
-                height: 20,
-                decoration: BoxDecoration(color: Colors.black54,
-                  borderRadius: BorderRadius.only(topRight: Radius.circular(5))
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Icon(Icons.headset,color: Colors.amberAccent,size: 18,),
-                    Text("15W",style: TextStyle(color:Colors.white),),
-                  ],
-                ),
-              )
-            ],
+    ),
+    child: Column(
+    children: <Widget>[
+    Stack(
+    alignment: Alignment.bottomLeft,
+    children: <Widget>[
+    ClipRRect(
+    borderRadius: BorderRadius.only(topLeft: Radius.circular(20),topRight: Radius.circular(20)),
+    child: CachedNetworkImage(
+    imageUrl: url,
+    fit: BoxFit.cover,
+    width:  height(context),
+    height:  height(context),
+    ),
+    ),
+    Container(
+    width: 56,
+    height: 20,
+    decoration: BoxDecoration(color: Colors.black54,
+    borderRadius: BorderRadius.only(topRight: Radius.circular(5))
+    ),
+    child: Row(
+    mainAxisAlignment: MainAxisAlignment.spaceAround,
+    crossAxisAlignment: CrossAxisAlignment.center,
+    children: <Widget>[
+    Icon(Icons.headset,color: Colors.amberAccent,size: 18,),
+    Text("15W",style: TextStyle(color:Colors.white),),
+    ],
+    ),
+    )
+    ],
+    ),
+    SizedBox(height: 3,),
+    Text(name,style: TextStyle(fontSize: 16),)
+    ],
+    ),
+    width: height(context),
+    height: height(context)+30,
+    ),
+        ClipRRect(
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+          child: MaterialButton(
+            padding: EdgeInsets.all(0),
+            child: Container(
+              width: height(context),
+              height: height(context)+30,
+            ),
+            minWidth: height(context),
+            height: height(context)+30,
+            onPressed: (){print("");},
           ),
-          SizedBox(height: 3,),
-          Text(name,style: TextStyle(fontSize: 16),)
-        ],
-      ),
-      width: height(context),
-      height: height(context)+30,
+        ),
+      ],
     );
   }
 
@@ -275,63 +361,52 @@ class ItemList extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Column(
-                children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(50)),
-                      color: Colors.white
-                    ),
-                    child: Icon(MdiIcons.microphoneVariant,color: Colors.amberAccent,size: 24,),
-                  ),
-                  SizedBox(height: 8,),
-                  Text("Singer",style: TextStyle(fontSize: 14),)
-                ],
-              ),
-              Column(
-                children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(50)),
-                        color: Colors.white
-                    ),
-                    child: Icon(MdiIcons.radio,color: Colors.amberAccent,size: 24,),
-                  ),
-                  SizedBox(height: 8,),
-                  Text("Radio",style: TextStyle(fontSize: 14),)
-                ],
-              ),   Column(
-                children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(50)),
-                        color: Colors.white
-                    ),
-                    child: Icon(MdiIcons.playlistMusic,color: Colors.amberAccent,size: 24,),
-                  ),
-                  SizedBox(height: 8,),
-                  Text("Song List",style: TextStyle(fontSize: 14),)
-                ],
-              ),   Column(
-                children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(50)),
-                        color: Colors.white
-                    ),
-                    child: Icon(MdiIcons.starFourPoints,color: Colors.amberAccent,size: 24,),
-                  ),
-                  SizedBox(height: 8,),
-                  Text("Rank",style: TextStyle(fontSize: 14),)
-                ],
-              )
+              new CircleBotton(icon: MdiIcons.microphoneVariant,name: "Singer",),
+              new CircleBotton(icon: MdiIcons.radio,name: "Radio",),
+              new CircleBotton(icon: MdiIcons.playlistMusic,name: "Song List",),
+              new CircleBotton(icon: MdiIcons.starFourPoints,name: "Rank",),
+              //           new CircleBotton(),
+   //           new CircleBotton(),
             ],
           ),
         )
+      ],
+    );
+  }
+}
+
+class CircleBotton extends StatelessWidget {
+  IconData icon;
+  String name;
+  CircleBotton({@required this.name,@required this.icon});
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        Stack(
+          children: <Widget>[
+            Container(
+              padding: EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(50)),
+                  color: Colors.white
+              ),
+              child: Icon(icon,color: Colors.amberAccent,size: 24,),
+            ),
+            ClipRRect(
+              borderRadius: BorderRadius.all(Radius.circular(50)),
+              child: MaterialButton(
+                minWidth: 56,
+                height: 56,
+                padding: EdgeInsets.all(0),
+                child: Container(height: 56,width: 56,),
+                onPressed: (){print("");},
+              ),
+            )
+          ],
+        ),
+        SizedBox(height: 8,),
+        Text(name,style: TextStyle(fontSize: 14),)
       ],
     );
   }
