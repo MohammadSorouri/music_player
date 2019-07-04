@@ -5,6 +5,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'header.dart';
 import 'package:flutter_inner_drawer/inner_drawer.dart';
 
+import 'musicController.dart';
+
 
 void main() => runApp(MyApp());
 
@@ -90,7 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
               )
             ],
           ),
-          InnerDrawer(child: Scaffold(), scaffold: Align(
+          InnerDrawer(child: MusicController(), scaffold: Align(
             alignment: Alignment.bottomLeft,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
