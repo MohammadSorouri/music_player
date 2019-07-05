@@ -7,7 +7,6 @@ class MusicController extends StatefulWidget {
   @override
   _MusicControllerState createState() => _MusicControllerState();
 }
-typedef void OnError(Exception exception);
 class _MusicControllerState extends State<MusicController> {
   double _value;
   void _setvalue(double value) => setState(() => _value = value);
@@ -17,7 +16,10 @@ class _MusicControllerState extends State<MusicController> {
     // TODO: implement initState
     super.initState();
     _value = 0;
+
   }
+
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -78,32 +80,32 @@ class _MusicControllerState extends State<MusicController> {
             ),
           ),
           new Expanded(
-          child: Row(
+            child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
-    children: <Widget>[
-    IconButton(icon: Icon(Icons.skip_previous,size: 32,), onPressed: (){},color: Colors.white,),
-    SizedBox(width: 40,),
-    Material(
-    borderRadius: BorderRadius.all(Radius.circular(50)),
-    elevation: 3,
-    child: Container(
-    width: 56,
-    height: 56,
-    child: ClipRRect(borderRadius: BorderRadius.all(Radius.circular(50)),child: MaterialButton(
-    onPressed: (){
-    },
-    height: 56,
-    minWidth: 56,
-    highlightElevation: 1,
-    child: Container(child: Icon(Icons.play_arrow,color: Colors.amber,size: 24,)),)),
-    decoration: BoxDecoration(
-    color: Colors.white,
-    borderRadius: BorderRadius.all(Radius.circular(50))
-    ),
-    ),
-    ),
-    SizedBox(width: 40,),
-    IconButton(icon: Icon(Icons.skip_next,size: 32,), onPressed: (){},color: Colors.white,),
+            children: <Widget>[
+             IconButton(icon: Icon(Icons.skip_previous,size: 32,), onPressed: (){},color: Colors.white,),
+             SizedBox(width: 40,),
+            Material(
+             borderRadius: BorderRadius.all(Radius.circular(50)),
+              elevation: 3,
+              child: Container(
+              width: 56,
+                height: 56,
+                child: ClipRRect(borderRadius: BorderRadius.all(Radius.circular(50)),child: MaterialButton(
+                  onPressed: (){
+                },
+                height: 56,
+                minWidth: 56,
+                highlightElevation: 1,
+                 child: Container(child: Icon(Icons.play_arrow,color: Colors.amber,size: 24,)),)),
+                  decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(50))
+                      ),
+                      ),
+                      ),
+              SizedBox(width: 40,),
+              IconButton(icon: Icon(Icons.skip_next,size: 32,), onPressed: (){},color: Colors.white,),
 
     ],
     ),
