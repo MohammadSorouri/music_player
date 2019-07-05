@@ -6,7 +6,6 @@ import 'header.dart';
 import 'package:flutter_inner_drawer/inner_drawer.dart';
 
 import 'music.dart';
-import 'musicController.dart';
 
 
 void main() => runApp(MyApp());

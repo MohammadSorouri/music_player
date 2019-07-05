@@ -19,6 +19,7 @@ class AudioApp extends StatefulWidget {
 }
 
 class _AudioAppState extends State<AudioApp> {
+
   Duration duration;
   Duration position;
 
@@ -210,11 +211,11 @@ class _AudioAppState extends State<AudioApp> {
                   width: 56,
                   height: 56,
                   child: ClipRRect(borderRadius: BorderRadius.all(Radius.circular(50)),child: MaterialButton(
-                    onPressed:  isPlaying ? null : () => play(),
+                    onPressed:  isPlaying ? ()=> pause() : () => play(),
                     height: 56,
                     minWidth: 56,
                     highlightElevation: 1,
-                    child: Container(child: Icon(Icons.play_arrow,color: Colors.amber,size: 24,)),)),
+                    child: Container(child: Icon(isPlaying?Icons.pause:Icons.play_arrow,color: Colors.amber,size: 24,)),)),
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.all(Radius.circular(50))
