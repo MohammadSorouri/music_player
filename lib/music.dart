@@ -5,23 +5,26 @@ import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
+import 'Song.dart';
+
 typedef void OnError(Exception exception);
-var kUrl = "http://srv1.mihan.xyz/s3/nevisande/takahang/1394/03/09/Siavash%20Ghomayshi%20-%20Pooch%20%5B128%5D.mp3";
 
 
 enum PlayerState { stopped, playing, paused }
 var size ;
 class AudioApp extends StatefulWidget {
+  static var kUrl = "http://srv1.mihan.xyz/s3/nevisande/takahang/1394/03/09/Siavash%20Ghomayshi%20-%20Pooch%20%5B128%5D.mp3";
 
   static var albumArtUrl = "https://www.my98music.com/wp-content/uploads/2015/05/Siavash-Ghomayshi-Pooch.jpg";
   static var songTitle = "Pooch";
   static var artist = "Siavash Ghomayshi";
+  static var id = 1;
   @override
   AudioAppState createState() => new AudioAppState();
 }
 
 class AudioAppState extends State<AudioApp> {
-
+  DemoPlaylist _playlist = demoPlaylist;
   Duration duration;
   static Duration position;
 
@@ -95,9 +98,8 @@ class AudioAppState extends State<AudioApp> {
     });
   }
 
-  static Future play({String url ="http://srv1.mihan.xyz/s3/nevisande/takahang/1394/03/09/Siavash%20Ghomayshi%20-%20Pooch%20%5B128%5D.mp3"}) async {
-    kUrl = url;
-    final result = await audioPlayer.play(kUrl);
+  static Future play() async {
+    final result = await audioPlayer.play(AudioApp.kUrl);
     if (result == 1)
 
         print('_AudioAppState.play... PlayerState.playing');
@@ -134,6 +136,40 @@ class AudioAppState extends State<AudioApp> {
 
   void onComplete() {
     setState(() => playerState = PlayerState.stopped);
+    next();
+  }
+
+  void next() {
+     if(AudioApp.id<_playlist.songs.length-1){
+       refresh();
+    }else{
+       AudioApp.id = -1;
+       refresh();
+     }
+  }
+
+  void refresh() {
+      AudioAppState.stop();
+          AudioApp.id ++;
+          AudioApp.artist = _playlist.songs[AudioApp.id].artist;
+          AudioApp.albumArtUrl = _playlist.songs[AudioApp.id].albumArtUrl;
+          AudioApp.kUrl = _playlist.songs[AudioApp.id].audioUrl;
+          AudioApp.songTitle = _playlist.songs[AudioApp.id].songTitle;
+          AudioAppState.play();
+  }
+  void back() {
+      AudioAppState.stop();
+      AudioAppState.play();
+  }
+  void backMusic(){
+    if(AudioApp.id!=0){
+      AudioApp.id = AudioApp.id-2;
+      refresh();
+    }
+    else{
+      AudioApp.id = _playlist.songs.length-2;
+      refresh();
+    }
   }
 
 
@@ -215,7 +251,7 @@ class AudioAppState extends State<AudioApp> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              IconButton(icon: Icon(Icons.skip_previous,size: 32,), onPressed: (){},color: Colors.white,),
+              GestureDetector(onDoubleTap: (){backMusic();},child: IconButton(icon: Icon(Icons.skip_previous,size: 32,), onPressed: (){back();},color: Colors.white,)),
               SizedBox(width: 40,),
               Material(
                 borderRadius: BorderRadius.all(Radius.circular(50)),
@@ -228,7 +264,7 @@ class AudioAppState extends State<AudioApp> {
                     height: 56,
                     minWidth: 56,
                     highlightElevation: 1,
-                    child: Container(child: Icon(isPlaying?Icons.pause:Icons.play_arrow,color: Colors.amber,size: 24,)),)),
+                    child: Container(child: Icon(playerState==PlayerState.playing?Icons.pause:Icons.play_arrow,color: Colors.amber,size: 24,)),)),
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.all(Radius.circular(50))
@@ -236,7 +272,7 @@ class AudioAppState extends State<AudioApp> {
                 ),
               ),
               SizedBox(width: 40,),
-              IconButton(icon: Icon(Icons.skip_next,size: 32,), onPressed: (){},color: Colors.white,),
+              IconButton(icon: Icon(Icons.skip_next,size: 32,), onPressed: (){next();},color: Colors.white,),
 
             ],
           ),

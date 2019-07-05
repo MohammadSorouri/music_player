@@ -1,7 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'Song.dart';
+import 'color.dart';
 import 'header.dart';
 import 'package:flutter_inner_drawer/inner_drawer.dart';
 
@@ -24,6 +28,7 @@ class MyApp extends StatelessWidget {
       title: 'MusicPlayer',
       theme: ThemeData(
         primarySwatch: Colors.amber,
+        primaryColor: primary,
         fontFamily: "Quicksand"
       ),
       home: MyHomePage(),
@@ -38,8 +43,25 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  startTimeout() {
+    var duration = Duration(milliseconds: 5000);
+    return new Timer(duration, handleTimeout);
+  }
+
+  void handleTimeout() {  // callback function
+    setState(() {
+    });
+    startTimeout();
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    startTimeout();
+  }
   @override
   Widget build(BuildContext context) {
+    var image = AudioApp.albumArtUrl;
     // TODO: implement build
     return Scaffold(
 
@@ -116,7 +138,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               child:Stack(
                                 alignment: Alignment.center,
                                 children: <Widget>[
-                                  ClipRRect(borderRadius: BorderRadius.circular(50),child: CachedNetworkImage(imageUrl: "https://www.my98music.com/wp-content/uploads/2015/05/Siavash-Ghomayshi-Pooch.jpg",fit: BoxFit.cover,)),
+                                  ClipRRect(borderRadius: BorderRadius.circular(50),child: CachedNetworkImage(imageUrl: AudioApp.albumArtUrl,fit: BoxFit.cover,)),
                                   Container(
                                     width: 12,
                                     height: 12,
@@ -166,16 +188,17 @@ class ListMusic1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    DemoPlaylist _playlist = demoPlaylist;
     return Padding(
       padding: EdgeInsets.only(top: 8,left: 16,right: 16),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          new ItemMusic(name: "Del",url: "http://myritm.com/Uploads/Pictures/1394-12/K/Kaveh-Afagh-Del-Picture.jpg",),
+           ItemMusic(name: _playlist.songs[0].songTitle,url: _playlist.songs[0].albumArtUrl,c: context,artist: _playlist.songs[0].artist,urlm: _playlist.songs[0].audioUrl,id: 0),
           SizedBox(width: 8,),
-          new ItemMusic(url: "https://www.my98music.com/wp-content/uploads/2015/05/Siavash-Ghomayshi-Pooch.jpg", name:"Pooch" ),
+          ItemMusic(name: _playlist.songs[1].songTitle,url: _playlist.songs[1].albumArtUrl,c: context,artist: _playlist.songs[1].artist,urlm: _playlist.songs[1].audioUrl,id: 1),
           SizedBox(width: 8,),
-          new ItemMusic(url: "https://bir-music.com/wp-content/uploads/2019/05/Reza-Yazdani-Too-Khodam-Misoozam.jpg", name: "Misoozam")
+          ItemMusic(name: _playlist.songs[2].songTitle,url: _playlist.songs[2].albumArtUrl,c: context,artist: _playlist.songs[2].artist,urlm: _playlist.songs[2].audioUrl,id: 2),
 
         ],
       ),
@@ -189,16 +212,18 @@ class ListMusic2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    DemoPlaylist _playlist = demoPlaylist;
+
     return Padding(
       padding: EdgeInsets.only(top: 8,left: 16,right: 16),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          new ItemMusic(name: "Zemestoon",url: "http://dl.irhits.ir/Single/1396/09%20-%20Azar/30/Aria%20Band%20-%20Zemestoon.jpg",),
+          ItemMusic(name: _playlist.songs[3].songTitle,url: _playlist.songs[3].albumArtUrl,c: context,artist: _playlist.songs[3].artist,urlm: _playlist.songs[3].audioUrl,id: 3),
           SizedBox(width: 8,),
-          new ItemMusic(url: "https://d2uqwoe9jzxxtn.cloudfront.net/images/music/cover/Ebi_Jane-Javani_1419049746.jpg", name:"Jane Javani" ),
+          ItemMusic(name: _playlist.songs[4].songTitle,url: _playlist.songs[4].albumArtUrl,c: context,artist: _playlist.songs[4].artist,urlm: _playlist.songs[4].audioUrl,id: 4),
           SizedBox(width: 8,),
-          new ItemMusic(url: "http://barf-music.com/wp-content/uploads/Shadmehr-Aghili-Hamishegi.jpg", name: "Hamishegi")
+          ItemMusic(name: _playlist.songs[5].songTitle,url: _playlist.songs[5].albumArtUrl,c: context,artist: _playlist.songs[5].artist,urlm: _playlist.songs[5].audioUrl,id: 5),
 
         ],
       ),
@@ -212,16 +237,18 @@ class ListMusic3 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    DemoPlaylist _playlist = demoPlaylist;
+
     return Padding(
       padding: EdgeInsets.only(top: 8,left: 16,right: 16),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          new ItemMusic(name: "Na",url: "https://images.sk-static.com/images/media/profile_images/artists/520028/huge_avatar",),
+          ItemMusic(name: _playlist.songs[6].songTitle,url: _playlist.songs[6].albumArtUrl,c: context,artist: _playlist.songs[6].artist,urlm: _playlist.songs[6].audioUrl,id: 6),
           SizedBox(width: 8,),
-          new ItemMusic(url: "https://www.ganja2music.com/Image/Post/12.2014/Sirvan%20Khosravi%20-%20Kojaei%20To.jpg", name:"Kojaei" ),
+          ItemMusic(name: _playlist.songs[7].songTitle,url: _playlist.songs[7].albumArtUrl,c: context,artist: _playlist.songs[7].artist,urlm: _playlist.songs[7].audioUrl,id: 7),
           SizedBox(width: 8,),
-          new ItemMusic(url: "https://ahaang.com/wp-content/uploads/2015/12/%DB%8C%D8%A7%D8%B3.jpg", name: "Asalatََ")
+          ItemMusic(name: _playlist.songs[8].songTitle,url: _playlist.songs[8].albumArtUrl,c: context,artist: _playlist.songs[8].artist,urlm: _playlist.songs[8].audioUrl,id: 8),
 
         ],
       ),
@@ -235,29 +262,26 @@ class ListMusic4 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    DemoPlaylist _playlist = demoPlaylist;
+
     return Padding(
       padding: EdgeInsets.only(top: 8,left: 16,right: 16),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          new ItemMusic(name: "Vabastegi",url: "https://i1.sndcdn.com/artworks-000239199195-3gq4bt-t500x500.jpg",),
+          ItemMusic(name: _playlist.songs[9].songTitle,url: _playlist.songs[9].albumArtUrl,c: context,artist: _playlist.songs[9].artist,urlm: _playlist.songs[9].audioUrl,id: 9),
           SizedBox(width: 8,),
-          new ItemMusic(url: "https://upmusics.com/wp-content/uploads/2017/11/mohsen-chavoshi-hamkhaab.jpg", name:"Hamkhab" ),
+          ItemMusic(name: _playlist.songs[10].songTitle,url: _playlist.songs[10].albumArtUrl,c: context,artist: _playlist.songs[10].artist,urlm: _playlist.songs[10].audioUrl,id: 10),
           SizedBox(width: 8,),
-          new ItemMusic(url: "https://upload.wikimedia.org/wikipedia/en/9/9b/Taylor_Swift_Feat._Kendrick_Lamar_-_Bad_Blood_%28Official_Single_Cover%29.png", name: "Bad Blood")
+          ItemMusic(name: _playlist.songs[11].songTitle,url: _playlist.songs[11].albumArtUrl,c: context,artist: _playlist.songs[11].artist,urlm: _playlist.songs[11].audioUrl,id: 11),
 
         ],
       ),
     );
   }
 }
-class ItemMusic extends StatelessWidget {
-  String url;
-  String name;
-   ItemMusic({@required this.url,@required this.name}) ;
 
-  @override
-  Widget build(BuildContext context) {
+Stack ItemMusic({  String url, String name,BuildContext c,String artist,String urlm,int id}) {
     return Stack(
       children: <Widget>[
 
@@ -276,8 +300,8 @@ class ItemMusic extends StatelessWidget {
     child: CachedNetworkImage(
     imageUrl: url,
     fit: BoxFit.cover,
-    width:  height(context),
-    height:  height(context),
+    width:  height(c),
+    height:  height(c),
     ),
     ),
     Container(
@@ -290,31 +314,31 @@ class ItemMusic extends StatelessWidget {
     mainAxisAlignment: MainAxisAlignment.spaceAround,
     crossAxisAlignment: CrossAxisAlignment.center,
     children: <Widget>[
-    Icon(Icons.headset,color: Colors.amberAccent,size: 18,),
-    Text("15W",style: TextStyle(color:Colors.white),),
+    Icon(Icons.headset,color: accent,size: 18,),
+    Text("15W",style: TextStyle(color:Colors.white),maxLines: 1,),
     ],
     ),
     )
     ],
     ),
     SizedBox(height: 3,),
-    Text(name,style: TextStyle(fontSize: 16),)
+    Text(name,style: TextStyle(fontSize: 16),maxLines: 1,)
     ],
     ),
-    width: height(context),
-    height: height(context)+30,
+    width: height(c),
+    height: height(c)+30,
     ),
         ClipRRect(
           borderRadius: BorderRadius.all(Radius.circular(20)),
           child: MaterialButton(
             padding: EdgeInsets.all(0),
             child: Container(
-              width: height(context),
-              height: height(context)+30,
+              width: height(c),
+              height: height(c)+30,
             ),
-            minWidth: height(context),
-            height: height(context)+30,
-            onPressed: (){AudioApp.artist="Kaveh Afagh";AudioApp.albumArtUrl=url;AudioApp.songTitle=name;AudioAppState.stop();AudioAppState.play(url: "http://dl.nex1music.ir/1394/12/12/Kaveh%20Afagh%20-%20Del%20[128].mp3?time=1562316895&filename=/1394/12/12/Kaveh%20Afagh%20-%20Del%20[128].mp3");_open();},
+            minWidth: height(c),
+            height: height(c)+30,
+            onPressed: (){AudioApp.id =id ;AudioApp.artist=artist;AudioApp.albumArtUrl=url;AudioApp.songTitle=name;AudioAppState.stop();AudioApp.kUrl= urlm;AudioAppState.play();_open();},
           ),
         ),
       ],
@@ -322,7 +346,7 @@ class ItemMusic extends StatelessWidget {
   }
 
   double height(BuildContext context) => (MediaQuery.of(context).size.width-48)/3;
-}
+
 
 class Popular extends StatelessWidget {
   const Popular({
@@ -393,7 +417,7 @@ class CircleBotton extends StatelessWidget {
                   borderRadius: BorderRadius.all(Radius.circular(50)),
                   color: Colors.white
               ),
-              child: Icon(icon,color: Colors.amberAccent,size: 24,),
+              child: Icon(icon,color: accent,size: 24,),
             ),
             ClipRRect(
               borderRadius: BorderRadius.all(Radius.circular(50)),
