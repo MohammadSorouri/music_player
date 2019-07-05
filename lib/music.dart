@@ -43,8 +43,18 @@ class _AudioAppState extends State<AudioApp> {
   void initState() {
     super.initState();
     initAudioPlayer();
+    startTimeout();
+  }
+  startTimeout() {
+    var duration = Duration(milliseconds: 500);
+    return new Timer(duration, handleTimeout);
   }
 
+  void handleTimeout() {  // callback function
+    setState(() {
+    });
+    startTimeout();
+  }
   Future initAudioPlayer() async {
     audioPlayer = new MusicFinder();
     var songs;
