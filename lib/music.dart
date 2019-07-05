@@ -13,7 +13,9 @@ enum PlayerState { stopped, playing, paused }
 var size ;
 class AudioApp extends StatefulWidget {
 
-
+  static var albumArtUrl = "https://www.my98music.com/wp-content/uploads/2015/05/Siavash-Ghomayshi-Pooch.jpg";
+  static var songTitle = "Pooch";
+  static var artist = "Siavash Ghomayshi";
   @override
   _AudioAppState createState() => new _AudioAppState();
 }
@@ -23,11 +25,11 @@ class _AudioAppState extends State<AudioApp> {
   Duration duration;
   Duration position;
 
-  MusicFinder audioPlayer;
+ static MusicFinder audioPlayer;
 
   String localFilePath;
 
-  PlayerState playerState = PlayerState.stopped;
+  static PlayerState playerState = PlayerState.stopped;
 
   get isPlaying => playerState == PlayerState.playing;
   get isPaused => playerState == PlayerState.paused;
@@ -46,7 +48,7 @@ class _AudioAppState extends State<AudioApp> {
     startTimeout();
   }
   startTimeout() {
-    var duration = Duration(milliseconds: 500);
+    var duration = Duration(milliseconds: 200);
     return new Timer(duration, handleTimeout);
   }
 
@@ -93,13 +95,13 @@ class _AudioAppState extends State<AudioApp> {
     });
   }
 
-  Future play() async {
+  static Future play() async {
     final result = await audioPlayer.play(kUrl);
     if (result == 1)
-      setState(() {
+
         print('_AudioAppState.play... PlayerState.playing');
         playerState = PlayerState.playing;
-      });
+
   }
 
   Future _playLocal() async {
@@ -169,13 +171,13 @@ class _AudioAppState extends State<AudioApp> {
                     elevation: 2,
                     child: ClipRRect(
                       borderRadius: BorderRadius.all(Radius.circular(20)),
-                      child: CachedNetworkImage(imageUrl: "https://www.my98music.com/wp-content/uploads/2015/05/Siavash-Ghomayshi-Pooch.jpg",width: size.width-180,height: size.width-180),
+                      child: CachedNetworkImage(imageUrl: AudioApp.albumArtUrl,width: size.width-180,height: size.width-180),
                     )
                 ),
                 SizedBox(height: size.height*.65*.03,),
-                Text("Pooch",style: TextStyle(color:Colors.black,fontSize: 18),),
+                Text(AudioApp.songTitle,style: TextStyle(color:Colors.black,fontSize: 18),),
                 SizedBox(height: size.height*.65*.02,),
-                Text("Siavash Ghomayshi",style: TextStyle(color:Colors.black54,fontSize: 14),),
+                Text(AudioApp.artist,style: TextStyle(color:Colors.black54,fontSize: 14),),
                 SizedBox(height: size.height*.65*.055,),
                 Padding(
                     padding: const EdgeInsets.only(left: 16,right: 16),
