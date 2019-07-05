@@ -314,7 +314,7 @@ class ItemMusic extends StatelessWidget {
             ),
             minWidth: height(context),
             height: height(context)+30,
-            onPressed: (){print("");},
+            onPressed: (){AudioApp.artist="Kaveh Afagh";AudioApp.albumArtUrl=url;AudioApp.songTitle=name;AudioAppState.stop();AudioAppState.play(url: "http://dl.nex1music.ir/1394/12/12/Kaveh%20Afagh%20-%20Del%20[128].mp3?time=1562316895&filename=/1394/12/12/Kaveh%20Afagh%20-%20Del%20[128].mp3");_open();},
           ),
         ),
       ],

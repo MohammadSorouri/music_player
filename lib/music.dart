@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 typedef void OnError(Exception exception);
-const kUrl = "http://srv1.mihan.xyz/s3/nevisande/takahang/1394/03/09/Siavash%20Ghomayshi%20-%20Pooch%20%5B128%5D.mp3";
+var kUrl = "http://srv1.mihan.xyz/s3/nevisande/takahang/1394/03/09/Siavash%20Ghomayshi%20-%20Pooch%20%5B128%5D.mp3";
 
 
 enum PlayerState { stopped, playing, paused }
@@ -17,13 +17,13 @@ class AudioApp extends StatefulWidget {
   static var songTitle = "Pooch";
   static var artist = "Siavash Ghomayshi";
   @override
-  _AudioAppState createState() => new _AudioAppState();
+  AudioAppState createState() => new AudioAppState();
 }
 
-class _AudioAppState extends State<AudioApp> {
+class AudioAppState extends State<AudioApp> {
 
   Duration duration;
-  Duration position;
+  static Duration position;
 
  static MusicFinder audioPlayer;
 
@@ -95,7 +95,8 @@ class _AudioAppState extends State<AudioApp> {
     });
   }
 
-  static Future play() async {
+  static Future play({String url ="http://srv1.mihan.xyz/s3/nevisande/takahang/1394/03/09/Siavash%20Ghomayshi%20-%20Pooch%20%5B128%5D.mp3"}) async {
+    kUrl = url;
     final result = await audioPlayer.play(kUrl);
     if (result == 1)
 
@@ -114,13 +115,13 @@ class _AudioAppState extends State<AudioApp> {
     if (result == 1) setState(() => playerState = PlayerState.paused);
   }
 
-  Future stop() async {
+ static Future stop() async {
     final result = await audioPlayer.stop();
     if (result == 1)
-      setState(() {
+
         playerState = PlayerState.stopped;
         position = new Duration();
-      });
+
   }
 
   Future mute(bool muted) async {
